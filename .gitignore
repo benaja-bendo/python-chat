@@ -1,0 +1,24 @@
+# Fichiers et dossiers générés par l'environnement de développement
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers de configuration spécifiques à l'environnement local
+.env
+
+# Dossiers spécifiques à l'environnement de développement
+venv/
+env/
+
+# Fichiers de logs
+*.log
+
+# Fichiers de sauvegarde
+*.bak
+*.swp
+*.swo
+
+# Fichiers de cache
+*.cache
+*.egg-info/
