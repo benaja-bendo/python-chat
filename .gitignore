@@ -1,3 +1,6 @@
+# Ide
+.idea
+
 # Fichiers et dossiers générés par l'environnement de développement
 __pycache__/
 *.pyc
