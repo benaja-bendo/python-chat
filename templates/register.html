@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <style>
+        form {
+            margin: 0 auto;
+            width: 50%;
+            border: 3px solid #f1f1f1;
+            padding: 10px;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 10px 10px;
+            margin: 5px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: #c3e6cb;
+            color: #155724;
+            padding: 10px 10px;
+            margin: 5px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        input[type=submit]:hover {
+            opacity: 0.8;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+    {% if message %}
+        <p class="toast_danger">{{ message }}</p>
+    {% endif %}
+    <div>
+        <h2>Inscription</h2>
+        <form action="/register" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="S'inscrire">
+        </form>
+    </div>
+{% endblock %}
