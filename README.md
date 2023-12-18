@@ -27,7 +27,8 @@ Capture d'écran
 
 ## structure du projet
 
-my_flask_app/
+```md
+python_chat/
 │
 ├── app/
 │   ├── __init__.py
@@ -58,3 +59,4 @@ my_flask_app/
 ├── .gitignore
 ├── requirements.txt
 ├── run.py
+```
