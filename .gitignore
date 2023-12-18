@@ -1,5 +1,6 @@
-# Ide
+# Fichiers et dossiers générés par l'IDE
 .idea
+.vscode
 
 # Fichiers et dossiers générés par l'environnement de développement
 __pycache__/
@@ -25,3 +26,8 @@ env/
 # Fichiers de cache
 *.cache
 *.egg-info/
+
+instance/
+*.db
+*.sqlite3
+migrations/
