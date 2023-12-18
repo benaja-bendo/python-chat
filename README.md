@@ -6,20 +6,29 @@ Ce projet est un exemple d'application Python utilisant le framework Flask pour 
 
 1. Clonez ce dépôt sur votre machine locale :
 
+    ```sh
+     git clone https://github.com/benaja-bendo/python-chat.git
+    ```
 
-2. Installez les dépendances du projet :
+2. Copier le fichier .env.example et renommé .env 
+
+    ```sh
+    cp .env.example .env
+    ```
+
+3. Installez les dépendances du projet :
 
     ```bash
     pip install -r requirements.txt
     ```
    
-3. Lancez le serveur de développement :
+4. Lancez le serveur de développement :
 
     ```bash
     python run.py
     ```
    
-4. Ouvrez votre navigateur à l'adresse [http://localhost:5000](http://localhost:5000).
+5. Ouvrez votre navigateur à l'adresse [http://localhost:5000](http://localhost:5000).
 
 ## Utilisation
 
