@@ -1,3 +1,4 @@
+import os
 from app import app, db
 from app.controllers import homeController, authController
 from flask import session, g
@@ -24,4 +25,5 @@ app.add_url_rule("/register", view_func=authController.register, methods=["GET",
 app.add_url_rule("/logout", view_func=authController.logout, methods=["POST"])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    DEBUG = os.getenv("DEBUG")
+    app.run(debug=DEBUG)

@@ -6,9 +6,11 @@ from app.models.message_model import MessageModel
 from app import db
 from sqlalchemy import and_, or_, text
 from sqlalchemy.orm import aliased
+import os
 
 
 def home():
+    print(f"Running app...{os.getenv("DEBUG")}")
     users = UserModel.query.all()
     return render_template("home.html", users=users)
 
