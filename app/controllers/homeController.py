@@ -40,7 +40,7 @@ def private_message(recipient_name: str):
             and_(MessageModel.sender_id == g.user.id, MessageModel.recipient_id == user_recipient.id),
             and_(MessageModel.recipient_id == g.user.id, MessageModel.sender_id == user_recipient.id)
         )) \
-        .order_by(MessageModel.sent_at.desc()) \
+        .order_by(MessageModel.sent_at.asc()) \
         .all()
     return render_template("private_message.html",
                            user_recipient=user_recipient,
