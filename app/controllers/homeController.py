@@ -7,6 +7,11 @@ from app import db
 from sqlalchemy import and_, or_, text
 from sqlalchemy.orm import aliased
 import os
+import requests
+import folium
+from datetime import datetime
+
+current_time = datetime.now()
 
 
 def home():
@@ -28,6 +33,29 @@ def post_message():
 
 
 def private_message(recipient_name: str):
+    API_KEY = "de5dec155db7939fd3dd72a0549bbb6c"
+
+    url = "https://api.openweathermap.org/data/2.5/weather?q=Bordeaux,fr&appid=" + API_KEY
+    response = requests.get(url)
+
+    data = response.json()
+    lon = data["coord"]["lon"]
+    lat = data["coord"]["lat"]
+    description = data["weather"][0]["description"]
+    temp = round(data["main"]["temp"] - 273.15, 1)
+    feels_like = round(data["main"]["feels_like"] - 273.15, 1)
+    humidity = data["main"]["humidity"]
+    speed = data["wind"]["speed"]
+    deg = data["wind"]["deg"]
+    sunrise = datetime.utcfromtimestamp(data["sys"]["sunrise"]).strftime('%Y-%m-%d %H:%M:%S')
+    sunset = datetime.utcfromtimestamp(data["sys"]["sunset"]).strftime('%Y-%m-%d %H:%M:%S')
+
+    map = folium.Map(location=[data["coord"]["lon"], data["coord"]["lat"]], zoom_start=12)
+
+    folium.Marker([data["coord"]["lon"], data["coord"]["lat"]], popup=data["weather"][0]["description"]).add_to(map)
+
+    map.save("map.html")
+
     user_recipient: Optional[UserModel] = UserModel.query.where(UserModel.username == recipient_name).first()
 
     sender = aliased(UserModel)
@@ -42,6 +70,18 @@ def private_message(recipient_name: str):
         )) \
         .order_by(MessageModel.sent_at.asc()) \
         .all()
+    
     return render_template("private_message.html",
                            user_recipient=user_recipient,
-                           messages=messages)
+                           messages=messages,
+                           lon = lon,
+                           lat = lat,
+                           description = description,
+                           temp = temp,
+                           feels_like = feels_like,
+                           humidity = humidity,
+                           speed = speed,
+                           deg = deg,
+                           sunrise = sunrise,
+                           sunset = sunset
+                           )

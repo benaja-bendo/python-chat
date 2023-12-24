@@ -39,9 +39,8 @@ def login():
         data = request.form
         username = data['username']
         password = data['password']
-        print('data', data['username'], data['password'])
 
-        # # Vérifier si l'utilisateur existe déjà
+        # Vérifier si l'utilisateur existe déjà
         existing_user = UserModel.query.filter_by(username=username).first()
 
         if not existing_user:
@@ -51,11 +50,22 @@ def login():
         if not existing_user.check_password(password):
             return render_template('login.html', message='mot de passe incorrect')
 
-        # Stocker l'id de l'utilisateur dans la session
+        # Stocker l'id et le nom d'utilisateur de l'utilisateur dans la session
         session['user_id'] = existing_user.id
+        session['username'] = existing_user.username
 
         return redirect(url_for('home'))
 
+def show_messages():
+    # Récupérer l'id et le nom d'utilisateur de l'utilisateur actuel depuis la session
+    user_id = session.get('user_id')
+    username = session.get('username')
+
+    # Utiliser ces informations pour afficher les messages dans le bon format
+    messages = get_messages_for_user(user_id)  # Remplacez ceci par votre logique de récupération des messages
+
+    # Passez ces informations au modèle HTML
+    return render_template('messages.html', messages=messages, current_user_id=user_id, current_username=username)
 
 def logout():
     session.clear()
