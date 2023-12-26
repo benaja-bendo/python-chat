@@ -26,5 +26,4 @@ app.add_url_rule("/logout", view_func=authController.logout, methods=["POST"])
 
 if __name__ == "__main__":
     DEBUG = os.getenv("DEBUG")
-    app.run(debug=DEBUG)
-    
+    app.run(debug=DEBUG)  
