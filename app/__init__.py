@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
@@ -9,6 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = os.getenv('SECRET_KEY')
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 db = SQLAlchemy(app)
 migrate = Migrate(app=app, db=db, command='migrate')
