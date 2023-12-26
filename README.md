@@ -75,5 +75,5 @@ python_chat/
 - [ ] Ajouter un système de recherche
 - [ ] Ajouter un système de suppression de compte
 - [ ] Ajouter un système de suppression de message
-- [ ] Ajouter un système de modification de message
+- [x] Ajouter un système de modification de message
 - [ ] Ajouter un bot qui répond aux messages
