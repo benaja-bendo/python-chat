@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr-FR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
     <style>
         body {
@@ -14,19 +14,19 @@
             height: 100vh;
         }
 
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .content {
-            flex: 1;
-            display: grid;
-            height: 100%;
-            /*overflow-y: auto;*/
-        }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .content {
+        flex: 1;
+        display: grid;
+        height: 100%;
+        /*overflow-y: auto;*/
+      }
 
         .navbar {
             display: flex;
@@ -36,80 +36,154 @@
             margin-bottom: 10px;
         }
 
-        .toast_success {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 9999;
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: .25rem;
+      .toast_success {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 9999;
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+      }
+
+      .toast_danger {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 9999;
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: #333;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          width: 100%;
         }
 
-        .toast_danger {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 9999;
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: .25rem;
+        .navbar {
+          flex-direction: column;
         }
-
-        .navbar a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                width: 100%;
-            }
-
-            .navbar {
-                flex-direction: column;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <div class="navbar">
+    <script defer>
+      const eventsElement = document.getElementById("events");
+
+      const eventSource = new EventSource(
+        "http://127.0.0.1:5000/api/notifications"
+      );
+
+      eventSource.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        console.log(data);
+        //eventsElement.innerHTML += `<p>${data.message}</p>`;
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
         <a href="/">Chat-Python</a>
-        <div>
-            <div>
-                {% if g.user %}
-                    <form action="/logout" method="post">
-                        <button type="submit">Déconnexion</button>
-                    </form>
-                {% else %}
-                    <a href="/register">Inscription</a>
-                    <a href="/login">Connexion</a>
-                {% endif %}
-            </div>
+        <div
+          style="
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              gap: 0.5rem;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            {% if g.user %}
+            <span style="color: red; font-weight: bold"
+              >Bonjour {{ g.user.username }}</span
+            >
+            {% if g.unread_notification_count == 0 %}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 36 36"
+            >
+              <path
+                fill="currentColor"
+                d="m32.85 28.13l-.34-.3A14.37 14.37 0 0 1 30 24.9a12.63 12.63 0 0 1-1.35-4.81v-4.94A10.81 10.81 0 0 0 19.21 4.4V3.11a1.33 1.33 0 1 0-2.67 0v1.31a10.81 10.81 0 0 0-9.33 10.73v4.94a12.63 12.63 0 0 1-1.35 4.81a14.4 14.4 0 0 1-2.47 2.93l-.34.3v2.82h29.8Z"
+                class="clr-i-solid clr-i-solid-path-1"
+              />
+              <path
+                fill="currentColor"
+                d="M15.32 32a2.65 2.65 0 0 0 5.25 0Z"
+                class="clr-i-solid clr-i-solid-path-2"
+              />
+              <path fill="none" d="M0 0h36v36H0z" />
+            </svg>
+            {% else %}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 36 36"
+            >
+              <path
+                fill="currentColor"
+                d="M18 34.28A2.67 2.67 0 0 0 20.58 32h-5.26A2.67 2.67 0 0 0 18 34.28"
+                class="clr-i-solid--badged clr-i-solid-path-1--badged"
+              />
+              <path
+                fill="currentColor"
+                d="m32.85 28.13l-.34-.3A14.37 14.37 0 0 1 30 24.9a12.63 12.63 0 0 1-1.35-4.81v-4.94a10.92 10.92 0 0 0-.16-1.79A7.5 7.5 0 0 1 22.5 6v-.63a10.57 10.57 0 0 0-3.32-1V3.11a1.33 1.33 0 1 0-2.67 0v1.31a10.81 10.81 0 0 0-9.3 10.73v4.94a12.63 12.63 0 0 1-1.35 4.81a14.4 14.4 0 0 1-2.47 2.93l-.34.3v2.82h29.8Z"
+                class="clr-i-solid--badged clr-i-solid-path-2--badged"
+              />
+              <circle
+                cx="30"
+                cy="6"
+                r="5"
+                fill="red"
+                class="clr-i-solid--badged clr-i-solid-path-3--badged clr-i-badge"
+              />
+              <path fill="none" d="M0 0h36v36H0z" />
+            </svg>
+            {% endif %} {% endif %}
+          </div>
+          <div>
+            {% if g.user %}
+            <form action="/logout" method="post">
+              <button type="submit">Déconnexion</button>
+            </form>
+            {% else %}
+            <a href="/register">Inscription</a>
+            <a href="/login">Connexion</a>
+            {% endif %}
+          </div>
         </div>
+      </div>
+      {% if success %}
+      <div class="toast_success">{{ success }}</div>
+      {% endif %} {% if error %}
+      <div class="toast_danger">{{ error }}</div>
+      {% endif %}
+      <main class="content">{% block content %}{% endblock %}</main>
     </div>
-    {% if success %}
-        <div class="toast_success">
-            {{ success }}
-        </div>
-    {% endif %}
-    {% if error %}
-        <div class="toast_danger">
-            {{ error }}
-        </div>
-    {% endif %}
-    <main class="content">
-    {% block content %}{% endblock %}
-    </main>
-</div>
-</body>
+  </body>
 </html>

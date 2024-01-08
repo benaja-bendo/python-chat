@@ -3,6 +3,8 @@ from flask import render_template, request, redirect, url_for, g
 from typing import Optional
 from app.models.user_model import UserModel
 from app.models.message_model import MessageModel
+from app.models.notification_model import NotificationModel
+from app.controllers.notificationController import send_notification
 from app import db
 from sqlalchemy import and_, or_, text
 from sqlalchemy.orm import aliased
@@ -25,10 +27,28 @@ def post_message():
     message = data['message']
     sender_id = g.user.id
     recipient_id = data['recipient_id']
-    sent_at = datetime.datetime.now(datetime.timezone.utc)
+    sent_at = datetime.datetime.utcnow()
+
+    # Create a notification model with appropriate attributes
+    notification = NotificationModel(type='message', subject='New Message', body=message, sender_id=sender_id, recipient_id=recipient_id, date=sent_at, status='unread')
+
+    # Add the notification to the database session
+    db.session.add(notification)
+
+    # Create a message model with appropriate attributes
     new_message = MessageModel(message=message, sender_id=sender_id, recipient_id=recipient_id, sent_at=sent_at)
+
+    # Add the message to the database session
     db.session.add(new_message)
+
+    # Commit changes to the database
     db.session.commit()
+
+    # Send a notification to the recipient
+    # notify_user(recipient_id)
+    send_notification()
+
+    # Redirect to the previous page
     return redirect(request.referrer)
 
 
@@ -70,7 +90,13 @@ def private_message(recipient_name: str):
         )) \
         .order_by(MessageModel.sent_at.asc()) \
         .all()
-    
+
+    # Mark all notifications between the two users as read
+    notifications = NotificationModel.query.filter_by(sender_id=g.user.id, recipient_id=user_recipient.id, status='unread').all()
+    for notification in notifications:
+        notification.status = 'read'
+    db.session.commit()
+
     return render_template("private_message.html",
                            user_recipient=user_recipient,
                            messages=messages,
