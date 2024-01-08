@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-        height: 100vh;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            /*overflow: hidden;*/
+            height: 100vh;
+        }
 
       .container {
         width: 80%;
@@ -28,12 +28,13 @@
         /*overflow-y: auto;*/
       }
 
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        background-color: #f8f9fa;
-        padding: 1rem;
-      }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 10px;
+        }
 
       .toast_success {
         position: absolute;

@@ -10,12 +10,10 @@
         }
 
         .header-message {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
+            background: linear-gradient(to right, #e6f9ff, #16b7cc);
             padding: .75rem 1.25rem;
             margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: .25rem;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -25,19 +23,7 @@
             margin: 0;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #155724;
-        }
-
-        .back-space {
-            color: #155724;
-            text-decoration: none;
-            padding: 2px 5px;
-            border-radius: 5px;
-            background-color: #ebebeb;
-        }
-
-        .back-space:hover {
-            background-color: #c3e6cb;
+            color: #152f57;
         }
 
         .menu {
@@ -45,18 +31,12 @@
             gap: 1rem;
         }
 
-        .menu .option {
-            display: flex;
-            gap: .25rem;
-        }
-
         .menu a {
             display: block;
-            color: #155724;
+            color: white;
             text-decoration: none;
             padding: 2px 5px;
             border-radius: 5px;
-            background-color: #ebebeb;
         }
 
         .contents-messages {
@@ -67,9 +47,11 @@
             overflow-y: auto;
         }
         .messages {
-            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-            overflow-y: hidden;
             max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
         }
         .no-message {
             display: grid;
@@ -83,22 +65,33 @@
             font-weight: bold;
             color: #155724;
         }
-
+        
         .all-messages {
-            overflow-y: auto;
-            height: 500px;
+            display: flex;
+            flex-direction: column;
         }
 
         .message {
-            background-color: #d4edda;
-            padding: .75rem 1.25rem;
+            padding: 8px;
+            color: #152f57;
+            background-color: #e6f9ff;
             margin-bottom: 1rem;
-            border: 1px solid #c3e6cb;
             border-radius: .25rem;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background-color: #e6f9ff;
+        }
+
+        .received {
+            align-self: flex-start;
+            background-color: #e6f9ff;
         }
 
         .message-form {
             margin: 1rem 0;
+            align-items: flex-end;
         }
         .game-content {
             overflow-y: hidden;
@@ -109,6 +102,14 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .gap {
+            background-color: #16b7cc; 
+            border-radius: 10px; 
+            margin: 5px 5px 15px 5px;
+            color: white;
+        }
+
     </style>
     <div class="main">
         <div class="header-message">
@@ -116,35 +117,13 @@
                 <span>Messages privés avec {{ user_recipient.username }}</span>
             </h2>
             <div class="menu">
-                <div>
-                    <a href="#" title="jouer à snake">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 36 36">
-                            <path fill="#DD2E44"
-                                  d="M11.84 7.634c-.719 0-2.295 2.243-3.567 1.029c-.44-.419 1.818-1.278 1.727-2.017c-.075-.607-2.842-1.52-1.875-2.099c.967-.578 2.418.841 3.513.866c2.382.055 4.212-.853 4.238-.866a1.082 1.082 0 0 1 1.464.496c.27.547.051 1.213-.488 1.486c-.131.066-2.225 1.105-5.012 1.105z"/>
-                            <path fill="#77B255"
-                                  d="M27.818 36c-3.967 0-8.182-2.912-8.182-8.308c0-1.374-.89-1.661-1.637-1.661c-.746 0-1.636.287-1.636 1.661c0 5.396-4.216 8.308-8.182 8.308S0 33.23 0 27.692C0 14.4 14.182 12.565 14.182 14.4c0 1.835-7.636-1.107-7.636 12.185c0 2.215.89 2.769 1.636 2.769c.747 0 1.637-.287 1.637-1.661c0-5.395 4.215-8.308 8.182-8.308c3.966 0 8.182 2.912 8.182 8.308c0 1.374.89 1.661 1.637 1.661s1.636-.287 1.636-1.661V11.077c0-3.855-3.417-4.431-5.454-4.431c0 0-3.272 1.108-6.545 1.108s-4.364-2.596-4.364-4.431C13.091 1.488 17.455 0 24 0c6.546 0 12 4.451 12 11.077v16.615C36 33.088 31.784 36 27.818 36z"/>
-                            <circle cx="19" cy="3" r="1" fill="#292F33"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="option">
-                    <a href="/" class="back-space" title="Retour">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 14 14">
-                            <path fill="currentColor" fill-rule="evenodd"
-                                  d="M6.545.998a1 1 0 0 0 0 2h2.728a2.638 2.638 0 0 1 0 5.275H4.817V6.545a1 1 0 0 0-1.707-.707L.384 8.564a1.004 1.004 0 0 0-.22 1.09c.049.119.121.23.218.327l2.728 2.728a1 1 0 0 0 1.707-.707v-1.729h4.456a4.638 4.638 0 1 0 0-9.275H6.545Z"
-                                  clip-rule="evenodd"/>
-                        </svg>
-                    </a>
-                    <a href="/" class="back-space" title="Supprimer la conversation">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                            <g fill="none" fill-rule="evenodd">
-                                <path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/>
-                                <path fill="currentColor"
-                                      d="M14.28 2a2 2 0 0 1 1.897 1.368L16.72 5H20a1 1 0 1 1 0 2l-.003.071l-.867 12.143A3 3 0 0 1 16.138 22H7.862a3 3 0 0 1-2.992-2.786L4.003 7.07A1.01 1.01 0 0 1 4 7a1 1 0 0 1 0-2h3.28l.543-1.632A2 2 0 0 1 9.721 2h4.558ZM9 10a1 1 0 0 0-.993.883L8 11v6a1 1 0 0 0 1.993.117L10 17v-6a1 1 0 0 0-1-1Zm6 0a1 1 0 0 0-1 1v6a1 1 0 1 0 2 0v-6a1 1 0 0 0-1-1Zm-.72-6H9.72l-.333 1h5.226l-.334-1Z"/>
-                            </g>
-                        </svg>
-                    </a>
-                </div>
+                <a href="/" title="Retour">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 14 14">
+                        <path fill="currentColor" fill-rule="evenodd"
+                              d="M6.545.998a1 1 0 0 0 0 2h2.728a2.638 2.638 0 0 1 0 5.275H4.817V6.545a1 1 0 0 0-1.707-.707L.384 8.564a1.004 1.004 0 0 0-.22 1.09c.049.119.121.23.218.327l2.728 2.728a1 1 0 0 0 1.707-.707v-1.729h4.456a4.638 4.638 0 1 0 0-9.275H6.545Z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </a>
             </div>
         </div>
         <div class="contents-messages">
@@ -156,7 +135,7 @@
                 {% else %}
                     <div class="all-messages">
                         {% for message, sender, recipient in messages %}
-                            <div class="message">
+                            <div class="message {% if sender.id == current_user_id %}sent{% else %}received{% endif %}">
                                 <strong>{{ sender.username }}</strong>
                                 <span>{{ message.sent_at.strftime('%d/%m/%Y %H:%M:%S') }}</span>
                                 <p>{{ message.message }}</p>
@@ -165,8 +144,36 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="game-content">
-                <p>Météo</p>
+            <div>
+                <div style="display: flex; justify-content: space-between;">
+
+                    <div style="flex-direction: column;">
+
+                        <div class="gap" style="padding: 10px;">
+                        <strong>Coordonnées :</strong>
+                        <ul>
+                            <li><strong>Longitude: </strong>{{ lon }}</li>
+                            <li><strong>Latitude: </strong>{{ lat }}</li>
+                        </ul>
+                        </div>
+
+                        <div class="gap" style="padding: 10px;">
+                        <p><strong>Lever du soleil: </strong>{{ sunrise }}</p>
+                        <p><strong>Coucher du soleil: </strong>{{ sunset }}</p>
+                    </div>
+                    </div>
+                
+                    <div class="gap" style="padding: 10px 10px 0px 10px;">
+                        <p><strong>temps: </strong>{{ description }}</p>
+                        <p><strong>Température: </strong>{{ temp }}°C</p>
+                        <p><strong>Ressenti: </strong>{{ feels_like }}°C</p>
+                        <p><strong>Taux d'humidité: </strong>{{ humidity }}%</p>
+                        <p><strong>Vitesse du vent: </strong>{{ speed }}</p>
+                        <p><strong>deg: </strong>{{ deg }}</p>
+                    </div>
+                </div>
+
+                <iframe src="{{ url_for('static', filename='temp_map.html') }}" width="100%" height="500"></iframe>
             </div>
         </div>
         <div class="message-form">

@@ -30,4 +30,4 @@ app.add_url_rule("/api/notifications", view_func=notificationController.send_not
 
 if __name__ == "__main__":
     DEBUG = os.getenv("DEBUG")
-    app.run(debug=DEBUG)
+    app.run(debug=DEBUG)  

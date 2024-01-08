@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 app.secret_key = os.getenv('SECRET_KEY')
 CORS(app, resources={r"/*": {"origins": "*"}})
